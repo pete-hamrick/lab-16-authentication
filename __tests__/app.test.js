@@ -42,6 +42,19 @@ describe('authentication routes', () => {
     expect(res.body).toEqual({ id: '1' });
   });
 
+  it('should return 401 if bad email or password provided', async () => {
+    await UserService.create({
+      email: 'me@you.com',
+      password: 'usandthem',
+    });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'me@you.com', password: 'weandthem' });
+
+    expect(res.statusCode).toEqual(401);
+  });
+
   afterAll(() => {
     pool.end();
   });
