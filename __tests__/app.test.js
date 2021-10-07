@@ -29,6 +29,19 @@ describe('authentication routes', () => {
     expect(res.statusCode).toEqual(400);
   });
 
+  it('logs a user in returning the users id', async () => {
+    await UserService.create({
+      email: 'me@you.com',
+      password: 'usandthem',
+    });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'me@you.com', password: 'usandthem' });
+
+    expect(res.body).toEqual({ id: 1 });
+  });
+
   afterAll(() => {
     pool.end();
   });
