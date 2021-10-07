@@ -55,6 +55,12 @@ describe('authentication routes', () => {
     expect(res.statusCode).toEqual(401);
   });
 
+  it('returns the currently logged in user on the GET /me route', async () => {
+    //create user
+    //refactor for cookies
+    //login to user
+  });
+
   afterAll(() => {
     pool.end();
   });
