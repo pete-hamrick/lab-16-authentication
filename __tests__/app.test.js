@@ -39,7 +39,7 @@ describe('authentication routes', () => {
       .post('/api/auth/login')
       .send({ email: 'me@you.com', password: 'usandthem' });
 
-    expect(res.body).toEqual({ id: 1 });
+    expect(res.body).toEqual({ id: '1' });
   });
 
   afterAll(() => {
