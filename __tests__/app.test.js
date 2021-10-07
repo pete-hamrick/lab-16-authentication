@@ -10,9 +10,9 @@ describe('authentication routes', () => {
 
   it('signs up a user and returns that users id using POST /signup', async () => {
     const res = await request(app)
-      .post('api/auth/signup')
+      .post('/api/auth/signup')
       .send({ email: 'me@you.com', password: 'usandthem' });
-    expect(res.body).toEqual({ userId: '1' });
+    expect(res.body).toEqual({ id: '1' });
   });
 
   //create another test to try to signup an already existing user that 400s
