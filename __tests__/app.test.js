@@ -59,6 +59,23 @@ describe('authentication routes', () => {
     //create user
     //refactor for cookies
     //login to user
+    const user = await UserService.create({
+      email: 'me@you.com',
+      password: 'usandthem',
+    });
+
+    const agent = request.agent(app);
+
+    await agent
+      .post('/api/auth/login')
+      .send({ email: 'me@you.com', password: 'usandthem' });
+
+    const res = await agent.get('/api/auth/me');
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      userId: user.id,
+    });
   });
 
   afterAll(() => {
