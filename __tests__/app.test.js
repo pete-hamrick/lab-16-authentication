@@ -16,7 +16,6 @@ describe('authentication routes', () => {
     expect(res.body).toEqual({ id: '1' });
   });
 
-  //create another test to try to signup an already existing user that 400s
   it('returns 400 for trying to create new user where email already exists', async () => {
     await UserService.create({
       email: 'me@you.com',
@@ -27,7 +26,7 @@ describe('authentication routes', () => {
       .post('/api/auth/signup')
       .send({ email: 'me@you.com', password: 'allaboutme' });
 
-    expect(res.body).toEqual(400);
+    expect(res.statusCode).toEqual(400);
   });
 
   afterAll(() => {
