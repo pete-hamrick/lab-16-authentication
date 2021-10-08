@@ -56,10 +56,7 @@ describe('authentication routes', () => {
   });
 
   it('returns the currently logged in user on the GET /me route', async () => {
-    //create user
-    //refactor for cookies
-    //login to user
-    const user = await UserService.create({
+    await UserService.create({
       email: 'me@you.com',
       password: 'usandthem',
     });
@@ -74,7 +71,6 @@ describe('authentication routes', () => {
 
     expect(res.body).toEqual({
       id: expect.any(String),
-      userId: user.id,
     });
   });
 
