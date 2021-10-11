@@ -16,7 +16,7 @@ describe('authentication routes', () => {
 
   it('signs up a user and returns that users id using POST /signup', async () => {
     const res = await request(app).post('/api/auth/signup').send(standardUser);
-    expect(res.body).toEqual({ id: '1' });
+    expect(res.body).toEqual({ id: '1', email: 'me@you.com' });
   });
 
   it('returns 400 for trying to create new user where email already exists', async () => {
@@ -29,12 +29,12 @@ describe('authentication routes', () => {
     expect(res.statusCode).toEqual(400);
   });
 
-  it('logs a user in returning the users id', async () => {
+  it('logs a user in returning the user', async () => {
     await UserService.create(standardUser);
 
     const res = await request(app).post('/api/auth/login').send(standardUser);
 
-    expect(res.body).toEqual({ id: '1' });
+    expect(res.body).toEqual({ id: '1', email: 'me@you.com' });
   });
 
   it('should return 401 if bad email or password provided', async () => {
@@ -52,14 +52,13 @@ describe('authentication routes', () => {
 
     const agent = request.agent(app);
 
-    await agent
-      .post('/api/auth/login')
-      .send({ email: 'me@you.com', password: 'usandthem' });
+    await agent.post('/api/auth/login').send(standardUser);
 
     const res = await agent.get('/api/auth/me');
 
     expect(res.body).toEqual({
       id: expect.any(String),
+      email: 'me@you.com',
     });
   });
 
