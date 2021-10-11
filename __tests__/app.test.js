@@ -74,6 +74,17 @@ describe('authentication routes', () => {
     });
   });
 
+  //TODO
+  // a route that doesn't require a JWT
+  // a route only accessible to signed in users
+  //   if the req has no valid JWT then 401
+  // a route to set a users role thats only accessible to admin users
+  //   if no valid JWT then 401
+  //   if the user isn't an admin then 403
+
+  // all users need a role
+  // switch cookies to JWTs
+
   afterAll(() => {
     pool.end();
   });
