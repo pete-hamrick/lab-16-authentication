@@ -72,7 +72,7 @@ describe('authentication routes', () => {
 
     await agent.post('/api/auth/login').send(standardUser);
 
-    const res = await agent.update('/api/user/1').send({
+    const res = await agent.put('/api/auth/1').send({
       id: expect.any(String),
       email: 'me@you.com',
       role: 'ADMIN',
@@ -81,7 +81,7 @@ describe('authentication routes', () => {
     expect(res.status).toEqual(403);
     expect(res.body).toEqual({
       status: 403,
-      message: 'Unauthorized!',
+      message: 'Unauthorized',
     });
   });
 
