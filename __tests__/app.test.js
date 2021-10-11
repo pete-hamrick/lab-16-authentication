@@ -7,6 +7,7 @@ const UserService = require('../lib/services/UserService.js');
 const standardUser = {
   email: 'me@you.com',
   password: 'usandthem',
+  roleTitle: 'USER',
 };
 
 describe('authentication routes', () => {

@@ -13,3 +13,6 @@ CREATE TABLE users (
     role_id BIGINT NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+INSERT INTO roles (title)
+VALUES ('ADMIN'), ('USER');
