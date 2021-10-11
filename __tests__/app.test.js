@@ -64,10 +64,30 @@ describe('authentication routes', () => {
     });
   });
 
+  it('will not allow USER roles to set their role to admin', async () => {
+    await UserService.create(standardUser);
+
+    const agent = request.agent(app);
+
+    await agent.post('/api/auth/login').send(standardUser);
+
+    const res = await agent.update('/api/user/1').send({
+      id: expect.any(String),
+      email: 'me@you.com',
+      role: 'ADMIN',
+    });
+
+    expect(res.status).toEqual(403);
+    expect(res.body).toEqual({
+      status: 403,
+      message: 'Unauthorized!',
+    });
+  });
+
   //TODO
-  // a route that doesn't require a JWT
-  // a route only accessible to signed in users
-  //   if the req has no valid JWT then 401
+  // // a route that doesn't require a JWT
+  // // a route only accessible to signed in users
+  // //  if the req has no valid JWT then 401
   // a route to set a users role thats only accessible to admin users
   //   if no valid JWT then 401
   //   if the user isn't an admin then 403
