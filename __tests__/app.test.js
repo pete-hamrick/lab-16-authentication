@@ -59,6 +59,8 @@ describe('authentication routes', () => {
     expect(res.body).toEqual({
       id: expect.any(String),
       email: 'me@you.com',
+      exp: expect.any(Number),
+      iat: expect.any(Number),
     });
   });
 
