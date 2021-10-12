@@ -86,6 +86,34 @@ describe('authentication routes', () => {
     });
   });
 
+  it('will allow ADMIN roles to set a users role to admin', async () => {
+    await UserService.create(standardUser);
+    const admin = await UserService.create({
+      email: 'admin@you.com',
+      password: 'admin-password',
+      roleTitle: 'ADMIN',
+    });
+
+    const agent = request.agent(app);
+
+    await agent.post('/api/auth/login').send(standardUser);
+
+    const res = await agent.put('/api/auth/1').send({
+      id: expect.any(String),
+      email: 'me@you.com',
+      role: 'ADMIN',
+    });
+
+    expect(res.status).toEqual(403);
+    expect(res.body).toEqual({
+      status: 403,
+      message: 'Unauthorized',
+    });
+  });
+
+  afterAll(() => {
+    pool.end();
+  });
   //TODO
   // // a route that doesn't require a JWT
   // // a route only accessible to signed in users
@@ -96,8 +124,4 @@ describe('authentication routes', () => {
 
   // all users need a role
   // switch cookies to JWTs
-
-  afterAll(() => {
-    pool.end();
-  });
 });
